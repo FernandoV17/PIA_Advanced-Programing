@@ -21,6 +21,41 @@ def dna_gen(longitud, chunk_size=1_000_000):
         yield ''.join(random.choices(bases, k=current_chunk))
         remaining -= current_chunk
 
+def dna_random_gen_api(longitud, file_path="./data/input/data.txt", show_progress=True):
+    directorio = Path(file_path).parent
+    directorio.mkdir(parents=True, exist_ok=True)
+    archivo = Path(file_path)
+
+    pbar = tqdm(total=longitud, unit='bases', unit_scale=True,
+                desc="Generando secuencia", leave=True, disable=not show_progress)
+
+    try:
+        with open(archivo, 'w') as f:
+            start_time = time.time()
+
+            for chunk in dna_gen(longitud):
+                f.write(chunk)
+                pbar.update(len(chunk))
+                time.sleep(0.001)
+
+        tiempo_total = time.time() - start_time
+        pbar.close()
+
+        if show_progress:
+            print(f"\nSecuencia de {longitud:,} caracteres generada en {tiempo_total:.2f} segundos")
+            print(f"Guardada en: {archivo.resolve()}")
+
+        return str(archivo.resolve())
+
+    except KeyboardInterrupt:
+        pbar.close()
+        archivo.unlink()
+        raise RuntimeError("Ejecución interrumpida por el usuario.")
+    except Exception as e:
+        pbar.close()
+        archivo.unlink()
+        raise RuntimeError(f"Error durante la generación: {str(e)}")
+
 def main():
     print("Generador de secuencias aleatorias de ADN")
     while True:
