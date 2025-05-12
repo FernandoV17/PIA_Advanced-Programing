@@ -2,9 +2,7 @@ SRC_DIR := cpp
 LIB_DIR := $(SRC_DIR)/lib
 BUILD_DIR := builds
 
-# Archivos fuente principales
 SRC := $(SRC_DIR)/main.cpp
-# Archivo de la biblioteca merge_sort
 MRG_SRC := $(LIB_DIR)/merge_sort/merge_sort.cpp
 CNT_SRC := $(LIB_DIR)/counting/counting.cpp
 

@@ -3,13 +3,13 @@ import time
 import subprocess
 import numpy as np
 import matplotlib
-matplotlib.use('TkAgg')
+matplotlib.use('TkAgg') #if linux, need to install TkAgg manually
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from random_string_gen import remove_pycache
 from random_string_gen import dna_random_gen_api
 
-N_ITERATIONS = 100_000
+N_ITERATIONS = 10_000
 FILE_PATH = "./data/input/data.txt"
 EXECUTABLE_PATH = "./builds/main"
 
