@@ -9,6 +9,10 @@ from tqdm import tqdm
 from random_string_gen import remove_pycache
 from random_string_gen import dna_random_gen_api
 
+<<<<<<< Updated upstream
+=======
+START = 10_000
+>>>>>>> Stashed changes
 N_ITERATIONS = 1_000_000
 FILE_PATH = "./data/input/data.txt"
 EXECUTABLE_PATH = "./builds/main"
@@ -33,7 +37,7 @@ y_data = np.zeros(N_ITERATIONS, dtype=np.float32)
 total_time = 0.0
 
 try:
-    with tqdm(range(1, N_ITERATIONS + 1), desc="Progreso", unit="iter") as pbar:
+    with tqdm(range(START, N_ITERATIONS + 1), desc="Progreso", unit="iter") as pbar:
         for i, n in enumerate(pbar):
             dna_random_gen_api(n, FILE_PATH, show_progress=False)
 
