@@ -9,7 +9,7 @@ from tqdm import tqdm
 from random_string_gen import remove_pycache
 from random_string_gen import dna_random_gen_api
 
-START = 10_000
+START = 0
 N_ITERATIONS = 1_000_000
 FILE_PATH = "./data/input/data.txt"
 EXECUTABLE_PATH = "./builds/main"
