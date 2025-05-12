@@ -65,7 +65,7 @@ PIA_Advanced-Programing/
 │           └── counting.h
 ├── builds/
 ├── scrips/
-│   └── analisis_tiempo.py
+│   └── test_files.py
 ├── data/
 │   ├── input/
 │   │   └── data.txt
