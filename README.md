@@ -83,7 +83,6 @@ PIA_Advanced-Programing/
 - ✔️ **Binary DNA Sequence Reading**
 - ✔️ **Valid Nucleotide Counting** (A, T, C, G, U)
 - ✔️ **Efficient Merge Sort**
-- ✔️ **OpenMP Parallelization**
 - ✔️ **Python Performance Visualization**
 
 ## 📌 Additional Notes
