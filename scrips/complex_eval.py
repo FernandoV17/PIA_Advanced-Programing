@@ -3,13 +3,14 @@ import time
 import subprocess
 import numpy as np
 import matplotlib
-matplotlib.use('TkAgg') #if linux, need to install TkAgg manually
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from random_string_gen import remove_pycache
 from random_string_gen import dna_random_gen_api
 
-N_ITERATIONS = 10_000
+START = 0
+N_ITERATIONS = 1_000_000
 FILE_PATH = "./data/input/data.txt"
 EXECUTABLE_PATH = "./builds/main"
 
@@ -33,7 +34,7 @@ y_data = np.zeros(N_ITERATIONS, dtype=np.float32)
 total_time = 0.0
 
 try:
-    with tqdm(range(1, N_ITERATIONS + 1), desc="Progreso", unit="iter") as pbar:
+    with tqdm(range(START, N_ITERATIONS + 1), desc="Progreso", unit="iter") as pbar:
         for i, n in enumerate(pbar):
             dna_random_gen_api(n, FILE_PATH, show_progress=False)
 
