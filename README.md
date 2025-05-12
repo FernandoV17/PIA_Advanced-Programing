@@ -86,6 +86,4 @@ PIA_Advanced-Programing/
 
 ## 📌 Additional Notes
 - Performance depends heavily on file I/O and sequence size.
-- OpenMP parallelization offers modest improvements due to natural bottlenecks (e.g., mergeSort merging and counting synchronization).
 - Code is designed for clarity, modularity, and extensibility.
-```
