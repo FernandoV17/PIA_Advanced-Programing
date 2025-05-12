@@ -48,7 +48,9 @@ pip install -r requirements.txt
 
 ### 6. Run Analysis Scripts
 ```bash
-python scrips/analisis_tiempo.py
+python scrips/simple_eval.py
+#or
+python scrips/complex_eval.py
 ```
 
 ## 📂 Project Structure
