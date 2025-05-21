@@ -1,3 +1,4 @@
 /data/input/data.txt
 /data/output/data_sorted.txt
 /builds/
+scripts/__pycache__/
