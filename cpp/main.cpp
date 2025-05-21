@@ -4,89 +4,90 @@
 #include <stdexcept>
 #include "./lib/merge_sort/merge_sort.h"
 #include "./lib/counting/counting.h"
+using namespace std;
 
-void leerSecuenciaADN(const std::string& ruta, std::vector<char>& secuencia) {
-    std::ifstream archivo(ruta, std::ios::binary);
+void leersequenceADN(const string& ruta, vector<char>& sequence) {
+    ifstream archivo(ruta, ios::binary);
     if (!archivo.is_open()) {
-        throw std::runtime_error("No se pudo abrir el archivo: " + ruta);
+        throw runtime_error("No se pudo abrir el archivo: " + ruta);
     }
 
-    std::string contenido((std::istreambuf_iterator<char>(archivo)),
-                         std::istreambuf_iterator<char>());
+    string contenido((istreambuf_iterator<char>(archivo)),
+                         istreambuf_iterator<char>());
 
     for (char c : contenido) {
         c = toupper(c);
         if (isalpha(c)) {
-            secuencia.push_back(c);
+            sequence.push_back(c);
         }
     }
     archivo.close();
 }
 
-void guardarSecuenciaOrdenada(const std::string& ruta, const std::vector<char>& secuencia) {
-    std::ofstream archivo(ruta, std::ios::binary);
+void guardarsequenceOrdenada(const string& ruta, const vector<char>& sequence) {
+    ofstream archivo(ruta, ios::binary);
     if (!archivo.is_open()) {
-        throw std::runtime_error("No se pudo crear el archivo: " + ruta);
+        throw runtime_error("No se pudo crear el archivo: " + ruta);
     }
 
     const size_t bloque_size = 4096;
     size_t pos = 0;
-    while (pos < secuencia.size()) {
-        size_t bloque_actual = std::min(bloque_size, secuencia.size() - pos);
-        archivo.write(&secuencia[pos], bloque_actual);
+    while (pos < sequence.size()) {
+        size_t bloque_actual = min(bloque_size, sequence.size() - pos);
+        archivo.write(&sequence[pos], bloque_actual);
         pos += bloque_actual;
     }
     archivo.close();
 }
 
 void mostrarConteo(const CountResult& resultado) {
-    std::cout << "\n=== CONTEO DE NUCLEÓTIDOS ===\n";
-    std::cout << "TOTAL: " << resultado.total << "\n";
+    cout << "\n=== CONTEO DE NUCLEÓTIDOS ===\n";
+    cout << "TOTAL: " << resultado.total << "\n";
 
-    const std::vector<char> orden = {'A', 'T', 'C', 'G', 'U'};
+    const vector<char> orden = {'A', 'T', 'C', 'G', 'U'};
     for (char base : orden) {
         if (resultado.counts.find(base) != resultado.counts.end()) {
-            std::cout << base << " (" << resultado.names.at(base) << "): "
+            cout << base << " (" << resultado.names.at(base) << "): "
                       << resultado.counts.at(base) << "\n";
         }
     }
 }
 
 int main() {
-    const std::string archivo_entrada = "data/input/data.txt";
-    const std::string archivo_salida = "data/output/data_sorted.txt";
+    const string archivo_entrada = "data/input/data.txt";
+    const string archivo_salida = "data/output/data_sorted.txt";
 
-    std::vector<char> secuencia;
+    vector<char> sequence;
 
     try {
-        leerSecuenciaADN(archivo_entrada, secuencia);
+        leersequenceADN(archivo_entrada, sequence);
 
-        std::cout << "Secuencia leída (" << secuencia.size() << " nucleótidos)\n";
-        std::cout << "Primeros 10 caracteres: ";
-        for (int i = 0; i < std::min(10, (int)secuencia.size()); ++i) {
-            std::cout << secuencia[i];
+        cout << "sequence leída (" << sequence.size() << " nucleótidos)\n";
+        cout << "Primeros 10 caracteres: ";
+        for (int i = 0; i < min(10, (int)sequence.size()); ++i) {
+            cout << sequence[i];
         }
-        std::cout << "\n...\n";
+        cout << "\n...\n";
 
-        CountResult conteo = countNucleotidos(secuencia);
+        CountResult conteo = countNucleotidos(sequence);
         mostrarConteo(conteo);
 
-        mergeSort(secuencia);
+        mergeSort(sequence);
 
-        guardarSecuenciaOrdenada(archivo_salida, secuencia);
+        guardarsequenceOrdenada(archivo_salida, sequence);
 
-        std::cout << "\nSecuencia ordenada guardada en: " << archivo_salida << "\n";
-        std::cout << "Primeros 10 caracteres ordenados: ";
-        for (int i = 0; i < std::min(10, (int)secuencia.size()); ++i) {
-            std::cout << secuencia[i];
+        cout << "\nsequence ordenada guardada en: " << archivo_salida << "\n";
+        cout << "Primeros 10 caracteres ordenados: ";
+        for (int i = 0; i < min(10, (int)sequence.size()); ++i) {
+            cout << sequence[i];
         }
-        std::cout << "\n";
+        cout << "\n";
 
-        CountResult conteoOrdenado = countNucleotidos(secuencia);
+        CountResult conteoOrdenado = countNucleotidos(sequence);
         mostrarConteo(conteoOrdenado);
 
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << "\n";
+    } catch (const exception& e) {
+        cerr << "Error: " << e.what() << "\n";
         return 1;
     }
 
