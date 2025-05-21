@@ -10,9 +10,10 @@ from random_string_gen import remove_pycache
 from random_string_gen import dna_random_gen_api
 
 START = 0
-N_ITERATIONS = 1_000_000
+N_ITERATIONS = 1000_000_000
 FILE_PATH = "./data/input/data.txt"
 EXECUTABLE_PATH = "./builds/main"
+STEP = 1_000_000
 
 os.makedirs(os.path.dirname(FILE_PATH), exist_ok=True)
 os.makedirs('scrips/output', exist_ok=True)
@@ -34,9 +35,9 @@ y_data = np.zeros(N_ITERATIONS, dtype=np.float32)
 total_time = 0.0
 
 try:
-    with tqdm(range(START, N_ITERATIONS + 1), desc="Progreso", unit="iter") as pbar:
+    with tqdm(range(START, N_ITERATIONS + 1, STEP), desc="Progreso", unit="iter") as pbar:
         for i, n in enumerate(pbar):
-            dna_random_gen_api(n, FILE_PATH, show_progress=False)
+            dna_random_gen_api(n, FILE_PATH, show_progress=True)
 
             start_time = time.perf_counter()
             subprocess.run(
@@ -48,10 +49,11 @@ try:
             elapsed_time = time.perf_counter() - start_time
             total_time += elapsed_time
 
+            idx = i
             x_data[i] = n
             y_data[i] = elapsed_time
 
-            if i % 100 == 0 or i == N_ITERATIONS - 1:
+            if i % 1 == 0 or i == N_ITERATIONS - 1:
                 line.set_data(x_data[:i+1], y_data[:i+1])
                 ax.relim()
                 ax.autoscale_view()
