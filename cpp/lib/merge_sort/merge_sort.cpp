@@ -9,7 +9,6 @@ ostringstream getFileContent(string path);
 void merge(vector<char>& vec, int left, int mid, int right);
 void mergeSort(vector<char>& vec, int left, int right);
 
-// Función auxiliar original (sin main)
 ostringstream getFileContent(string path) {
    ifstream in(path, ios::binary);
    if(!in) {
