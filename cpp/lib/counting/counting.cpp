@@ -1,19 +1,20 @@
 #include "counting.h"
 #include <cctype>
+using namespace std;
 
-CountResult countNucleotidos(const std::vector<char>& secuencia) {
+
+CountResult countNucleotidos(const vector<char>& sequence) {
     CountResult result;
-    result.total = secuencia.size();
+    result.total = sequence.size();
 
-    const std::string nucleotidos = "ATCGU";
+    const string nucleotidos = "ATCGU";
     for (char n : nucleotidos) {
         result.counts[n] = 0;
     }
 
-    for (char c : secuencia) {
-        char upper = toupper(c);
-        if (result.counts.find(upper) != result.counts.end()) {
-            result.counts[upper]++;
+    for (char c : sequence) {
+        if (result.counts.find(c) != result.counts.end()) {
+            result.counts[c]++;
         }
     }
 

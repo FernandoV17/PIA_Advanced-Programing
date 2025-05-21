@@ -4,17 +4,18 @@
 #include <vector>
 #include <map>
 #include <string>
+using namespace std;
 
 struct CountResult {
     int total;
-    std::map<char, int> counts;
-    std::map<char, std::string> names = {
+    map<char, int> counts;
+    map<char, std::string> names = {
         {'A', "Adenina"}, {'T', "Timina"},
         {'C', "Citosina"}, {'G', "Guanina"},
         {'U', "Uracilo"}
     };
 };
 
-CountResult countNucleotidos(const std::vector<char>& secuencia);
+CountResult countNucleotidos(const std::vector<char>& sequence);
 
 #endif
