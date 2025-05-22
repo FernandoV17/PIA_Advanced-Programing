@@ -10,10 +10,10 @@ from random_string_gen import remove_pycache
 from random_string_gen import dna_random_gen_api
 
 START = 0
-N_ITERATIONS = 1000_000_000
+N_ITERATIONS = 10_000
 FILE_PATH = "./data/input/data.txt"
 EXECUTABLE_PATH = "./builds/main"
-STEP = 1_000_000
+STEP = 1_000
 
 os.makedirs(os.path.dirname(FILE_PATH), exist_ok=True)
 os.makedirs('scrips/output', exist_ok=True)
@@ -37,7 +37,7 @@ total_time = 0.0
 try:
     with tqdm(range(START, N_ITERATIONS + 1, STEP), desc="Progreso", unit="iter") as pbar:
         for i, n in enumerate(pbar):
-            dna_random_gen_api(n, FILE_PATH, show_progress=True)
+            dna_random_gen_api(n, FILE_PATH, show_progress=False)
 
             start_time = time.perf_counter()
             subprocess.run(
@@ -74,7 +74,7 @@ finally:
     remove_pycache()
     plt.ioff()
     fig.savefig('scripts/output/final_plot.png')
-    np.savez('execution_data.npz', x_data=x_data, y_data=y_data)
+#    np.savez('execution_data.npz', x_data=x_data, y_data=y_data)
 
     plt.title(f"Resultado Final - Tiempo total: {total_time:.2f}s")
     plt.show(block=True)

@@ -5,7 +5,7 @@ import shutil
 from tqdm import tqdm
 
 def remove_pycache():
-    pycache_path = Path("scrips/__pycache__")
+    pycache_path = Path("scripts/__pycache__")
     try:
         if pycache_path.exists():
             shutil.rmtree(pycache_path)
