@@ -73,7 +73,7 @@ except Exception as e:
 finally:
     remove_pycache()
     plt.ioff()
-    fig.savefig('scrips/output/final_plot.png')
+    fig.savefig('scripts/output/final_plot.png')
     np.savez('execution_data.npz', x_data=x_data, y_data=y_data)
 
     plt.title(f"Resultado Final - Tiempo total: {total_time:.2f}s")
