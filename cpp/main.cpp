@@ -6,14 +6,18 @@
 #include "./lib/counting/counting.h"
 using namespace std;
 
-void leersequenceADN(const string& ruta, vector<char>& sequence) {
-    ifstream archivo(ruta, ios::binary);
+void leerSequenceADN(const string& ruta, vector<char>& sequence) {
+    ifstream archivo(ruta, ios::binary | ios::ate);  // Abre y va al final
     if (!archivo.is_open()) {
         throw runtime_error("No se pudo abrir el archivo: " + ruta);
     }
 
+    size_t size = archivo.tellg();
+    archivo.seekg(0);
+    sequence.reserve(size);
+
     string contenido((istreambuf_iterator<char>(archivo)),
-                         istreambuf_iterator<char>());
+                    istreambuf_iterator<char>());
 
     for (char c : contenido) {
         c = toupper(c);
@@ -24,33 +28,10 @@ void leersequenceADN(const string& ruta, vector<char>& sequence) {
     archivo.close();
 }
 
-void guardarsequenceOrdenada(const string& ruta, const vector<char>& sequence) {
+void guardarSequenceOrdenada(const string& ruta, const vector<char>& sequence) {
     ofstream archivo(ruta, ios::binary);
-    if (!archivo.is_open()) {
-        throw runtime_error("No se pudo crear el archivo: " + ruta);
-    }
-
-    const size_t bloque_size = 4096;
-    size_t pos = 0;
-    while (pos < sequence.size()) {
-        size_t bloque_actual = min(bloque_size, sequence.size() - pos);
-        archivo.write(&sequence[pos], bloque_actual);
-        pos += bloque_actual;
-    }
-    archivo.close();
-}
-
-void mostrarConteo(const CountResult& resultado) {
-    cout << "\n=== CONTEO DE NUCLEÓTIDOS ===\n";
-    cout << "TOTAL: " << resultado.total << "\n";
-
-    const vector<char> orden = {'A', 'T', 'C', 'G', 'U'};
-    for (char base : orden) {
-        if (resultado.counts.find(base) != resultado.counts.end()) {
-            cout << base << " (" << resultado.names.at(base) << "): "
-                      << resultado.counts.at(base) << "\n";
-        }
-    }
+    if (!archivo.is_open()) throw runtime_error("Error al crear: " + ruta);
+    archivo.write(sequence.data(), sequence.size());
 }
 
 int main() {
@@ -60,36 +41,26 @@ int main() {
     vector<char> sequence;
 
     try {
-        leersequenceADN(archivo_entrada, sequence);
+        cout << "Iniciando procesamiento...\n";
 
-        cout << "sequence leída (" << sequence.size() << " nucleótidos)\n";
-        cout << "Primeros 10 caracteres: ";
-        for (int i = 0; i < min(10, (int)sequence.size()); ++i) {
-            cout << sequence[i];
-        }
-        cout << "\n...\n";
+        leerSequenceADN(archivo_entrada, sequence);
+        cout << "Secuencia leida (" << sequence.size() << " nucleotidos)\n";
 
-        CountResult conteo = countNucleotidos(sequence);
-        mostrarConteo(conteo);
-
+        cout << "Ordenando secuencia...\n";
         mergeSort(sequence);
 
-        guardarsequenceOrdenada(archivo_salida, sequence);
-
-        cout << "\nsequence ordenada guardada en: " << archivo_salida << "\n";
-        cout << "Primeros 10 caracteres ordenados: ";
-        for (int i = 0; i < min(10, (int)sequence.size()); ++i) {
-            cout << sequence[i];
-        }
-        cout << "\n";
+        guardarSequenceOrdenada(archivo_salida, sequence);
 
         CountResult conteoOrdenado = countNucleotidos(sequence);
-        mostrarConteo(conteoOrdenado);
+        cout << conteoOrdenado.getFormattedCounts();
+        cout << conteoOrdenado.getCountsAsString() << "\n";
+
+        cout << "\nProceso completado exitosamente!\n";
 
     } catch (const exception& e) {
-        cerr << "Error: " << e.what() << "\n";
-        return 1;
+        cerr << "\nERROR: " << e.what() << "\n";
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }

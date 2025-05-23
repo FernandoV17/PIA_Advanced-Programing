@@ -46,6 +46,34 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+---
+### ⚠️ Important Recommendations
+
+-   **It is strongly recommended to run this project on Linux systems** to ensure full compatibility and optimal performance, particularly during the execution of visualization scripts.
+
+-   **Install the graphical backend `TkAgg`** via your package manager to ensure proper rendering of plots using `matplotlib` in Python.
+
+
+#### Example installation commands:
+
+-   On **Debian/Ubuntu**:
+
+    ```bash
+    sudo apt-get install python3-tk
+
+    ```
+
+-   On **Arch Linux** (I use Arch BTW):
+
+    ```bash
+    sudo pacman -S tk
+
+    ```
+
+
+----------
+
+
 ### 6. Run Analysis Scripts
 ```bash
 python scrips/simple_eval.py
